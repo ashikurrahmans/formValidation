@@ -11,22 +11,16 @@ const LeftForm = () => {
   const schema = yup.object({
     firstName: yup
       .string()
-      .required("First Name is required")
-      .min(3, "First Name is required"),
+      .min(3, "Minimum 3 charecter")
+      .required("First Name is required"),
     userName: yup
       .string()
       .required("User  Name is required")
       .min(5, "Minimum charecter is 5"),
     email: yup.string().email().required("Email address is required"),
-    phoneNumber: yup
-      .number()
-      .required()
-      .required("Phone Number is Required")
-      .matches(
-        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-        "Phone number is not valid"
-      ),
-    password: yup.string().required("Password is required"),
+    phoneNumber: yup.number().required("Phone Number is Required"),
+
+    password: yup.mixed().required("Password is required"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match"),
@@ -44,6 +38,7 @@ const LeftForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+    console.log(errors);
   };
 
   return (
@@ -63,6 +58,7 @@ const LeftForm = () => {
                 placeholder="Full Name*"
                 {...register("fullName")}
               />
+              {errors && errors?.firstName?.message}
             </div>
             <div className="w-full md:w-1/2 px-3">
               <input
