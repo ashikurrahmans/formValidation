@@ -17,6 +17,21 @@ const LeftForm = () => {
       .string()
       .required("User  Name is required")
       .min(5, "Minimum charecter is 5"),
+    email: yup.string().email().required("Email address is required"),
+    phoneNumber: yup
+      .number()
+      .required()
+      .required("Phone Number is Required")
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        "Phone number is not valid"
+      ),
+    password: yup.string().required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+    url: yup.string().url(),
+    question: yup.string().min(20, "Minimum 20 charecter "),
   });
 
   const {
